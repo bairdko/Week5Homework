@@ -15,12 +15,30 @@ var incorrectLoc = $("#incorrect");
 
 //array of answers
 var trivia = [
-  {question:"Question1",
-   answerChoices:["opt A","opt B","opt C","opt D"],
+  {question:"Who was the only president to serve non-consecutive terms?",
+   answerChoices:["Grover Clevland","Calvin Coolidge","Warren G. Harding","Richard Nixon"],
    key: [true,false,false,false]},
-  {question:"Question2",
-   answerChoices:["opt a","opt b","opt c","opt d"],
-   key:[false,false,true,false]} 
+  {question:"What is the capital of Vietnam?",
+   answerChoices:["Ho Chi Minh City","Da Nang","Hanoi","Hue"],
+   key:[false,false,true,false]}, 
+  {question:"What is the derivative of cos(x)?",
+    answerChoices:["sin(x)","xcos(x)","tan(x)","-sin(x)"],
+    key:[false,false,false,true]}, 
+  {question:"Which of the following is not a Hogwarts house?",
+    answerChoices:["Gryffindor","Pukwudgie","Slytherin","Hufflepuff"],
+    key:[false,true,false,false]}, 
+  {question:"What is the lead singer of Led Zeppelin's name?",
+    answerChoices:["Robert Plant","Jimmy Page","John Paul Jones","John Bonham"],
+    key:[true,false,false,false]}, 
+  {question:"What year was the Lion King released?",
+    answerChoices:["1989","1997","1994","2001"],
+    key:[false,false,true,false]}, 
+  {question:"Who is Xi Jinping?",
+    answerChoices:["Prime Minister of Japan","President of China","President of South Korea","US Ambassador to China"],
+    key:[false,true,false,false]}, 
+  {question:"Which team has won the most Stanley Cup titles?",
+    answerChoices:["Toronto Maple Leafs","Detroit Red Wings","Pittsburg Penguins","Montreal Canadiens"],
+    key:[false,false,false,true]} 
 ];
 
 
@@ -39,6 +57,17 @@ function countdown(){
   timer.text(timeLeft);
   if(timeLeft <= 0){
     clearInterval(timerDisplay);
+    $(document).off("click",".answers",testAnswer);
+    questionLoc.text("Out of time!")
+    $('ol').empty();
+    incorrect++;
+    setTimeout(function(){
+      incorrectLoc.text(incorrect);
+      restartTimer();
+      i++;
+      changeQuestion();
+      $(document).on("click",".answers",testAnswer);
+    },1000);
   }
   
 }
@@ -71,9 +100,23 @@ function changeQuestion(){
   }
 }
 
+function restartGame(){
+  i = 0;
+  correct = 0;
+  incorrect = 0;
+
+  correctLoc.text(correct);
+  incorrectLoc.text(incorrect);
+  
+  restartTimer();
+  changeQuestion();
+}
+
 function testAnswer(){
   var selectedButton = $(this);
   var isCorrect = $(this).attr("val");
+
+
 
   if(isCorrect === "true"){
     correct++;
@@ -111,22 +154,13 @@ function testAnswer(){
 
 }
 
-function restartGame(){
-  i = 0;
-  correct = 0;
-  incorrect = 0;
 
-  correctLoc.text(correct);
-  incorrectLoc.text(incorrect);
-  
-  restartTimer();
-  changeQuestion();
-}
 
 setQuestion();
 
 //test if true
 $(document).on("click",".answers",testAnswer);
 
-//THIS IS NOT COMPLETE, NEED TO MAKE IT SO THAT THE GAME TURNS OFF IF YOU DONT ANSWER AFTER 30 seconds
+
+//restart game
 $(document).on("click","#restart",restartGame);
