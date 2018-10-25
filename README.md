@@ -1,6 +1,8 @@
 #  Trivia Game  
 ###### Assigned: 7/5/18
 
+This was the fifth homework assigned in the bootcamp. The purpose of this was to teach us about Timeouts and Intervals.
+
 #### Game Mechanics
     - Click the answer choices
     - If you answer the questions correctly, your choice will be highlighted in blue and you will get a point in the correct box
